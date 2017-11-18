@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 """
-
+hello.py
 """
+import click
 
 def cli():
-    print('Hello World!')
+    click.echo('Hello World')
 
