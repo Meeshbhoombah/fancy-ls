@@ -1,4 +1,4 @@
-# $ fls -h
+# $ fls
 Fancy "ls" sorts files in the terminal categorized by tags in alphabetical order.
 
 ## Commands
