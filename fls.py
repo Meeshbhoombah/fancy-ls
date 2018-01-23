@@ -7,5 +7,3 @@ Terminal command that expands on the functionality of the `ls` command by allowi
 sorting of cateogries.
 """
 
-import plistlib
-
