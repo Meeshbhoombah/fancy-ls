@@ -50,7 +50,7 @@ are the incremental steps I decided on:
 3. `fls` categorizes files by tags and prints them
 4. `fls` looks aesthetic
 
-## Implmentation
+## Implementation
 After creating a new directory, `fls`, and initalizing Git, I added Vim extensions to my
 `.gitignore`. Afterwards I created a new file inside `fls` named `fls.py`. 
 
@@ -167,7 +167,7 @@ Wow, we really have to conform to the shell's rules. I guess you could say it ru
 # -*- encoding: utf-8 -*-
 ...
 ```
-Adding a **shebang** to my script.
+Adding a **shebang** to `fls.py`.
 
 Whenever a file is ran on a Unix based system (like my Mac, which has macOS Sierra), the
 interpreter checks the file for an interpreter directive, which are also known as shebangs
@@ -175,7 +175,7 @@ in Unix jargon.
 
 I'm using the enviroment to load the Python interpreter because it allows me to run the script
 on different systems, where Python may be installed in a different location. Running the file
-now should work as expected.
+should work as expected.
 ```bash
 $ ./fls.py "Hello, World"
 ./fls.py
@@ -213,9 +213,21 @@ export PATH=$PATH":$HOME/bin"
 After restarting the shell I can then run the command.
 ```bash
 $ fls Hello, World
+/Users/rohan/bin/fls
 Hello, 
 World
 ```
 
 Magical.
+
+# Tag City
+Now that I can run the command in any directory it is time for me to tackle the second step:
+1. `fls` in any dir prints "Hello World!"
+2. **`fls` prints the tags of current dir**
+3. `fls` categorizes files by tags and prints them
+4. `fls` looks aesthetic
+
+First, I need to locate the tags. After some Googling I found that **tags** are located in a
+`.plist` file at `~/Library/SyncedPreferences/com.apple.finder.plist`. Opening this in Vim
+gave me a ton of gibberish.
 
