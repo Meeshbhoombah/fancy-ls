@@ -218,8 +218,7 @@ Hello,
 World
 ```
 
-Here's what my script looks like up to this point.
-
+[Here's what my script looks like up to this point.](https://github.com/Meeshbhoombah/fls/blob/146409a305fb9c16a44d48625f6679b8a030dacb/fls.py)
 Magical.
 
 # Tag City
