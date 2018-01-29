@@ -80,13 +80,13 @@ Let's break it down further:
 1. Running `python fls <args>` should print all args passed.
 ```bash
 $ python fls.py "Hello, World!"
-$ fls.py
-$ "Hello, World!"
+fls.py
+"Hello, World!"
 ```
 2. Running `fls <args>` in any directory should print args.
 ```bash
 $ fls "Hello, World!"
-$ "Hello, World!"
+"Hello, World!"
 ```
 
 Using the in-built `sys` module made the first step simple to solve.
@@ -112,7 +112,7 @@ This would be like right-clicking on a script and clicking **Properties** > **Pe
 
 Now I can run the file from the command line.
 ```
-./fls "Hello, World!"
+$ ./fls "Hello, World!"
 ```
 The command is prefixed with a `./` because the current directory is not a part of the 
 Unix `PATH` environment variable. The `PATH` variable tells the shell which directories should
@@ -120,9 +120,102 @@ be searched in order to find commands in response to the command issued by the u
 
 The file is not a part of the shell like `ls`, `cd`, etc. These commands are called 
 `built-ins` and can be easily found by the shell. However, `executables`, which can take form
-as a shell script or a compiled program, require further direction for them to be found 
-by the shell. My file is a compiled program, therefore, it we need to provide the shell with
+as a shell script or a compiled program, require further direction to be found 
+by the shell. 
+
+My file is a compiled program, therefore, I need to provide the shell with
 more information in order for it to find the command. The `PATH` variable does not include
 subdirectories of the `root` directory, which it can access. The shell can be informed in
 an abbreviated way through the usage of the `./` command.
+
+I could just append a `./` to the start of my `PATH` enviroment variable, as it would tell
+the shell to also search the current directory, but this should be avoided for security 
+concerns and well as safety. If I were to inadverdently create a command that has the same
+name as an existing shell command the shell may accidentally execute the command I created,
+which probably would result in **absolute chaos**. I am normally a fan of **abosolute chaos**,
+but today I am feeling neutral good.
+
+However, when I ran the command to execute my file.
+```bash
+$ ./fls "Hello, World!"
+```
+
+I instead got a gnarly error.
+```bash
+./fls.py: line 8: 
+fls.py
+
+Terminal command that expands on the functionality of the LICENSE
+fls.py
+logbook.md
+readme.md
+venv command by allowing tagged
+sorting of cateogries.
+: command not found
+./fls.py: line 10: import: command not found
+./fls.py: line 12: syntax error near unexpected token `('
+./fls.py: line 12: `def print_input(args):'
+```
+Weird, right? Seems like the command is really confused as to what my file is, and how to
+execute it. 
+
+That's because I have not informed the shell to execute my file as Python script.
+Wow, we really have to conform to the shell's rules. I guess you could say it runs this whole
+**shebang**, which is a great transition to the next step.
+```python
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+...
+```
+Adding a **shebang** to my script.
+
+Whenever a file is ran on a Unix based system (like my Mac, which has macOS Sierra), the
+interpreter checks the file for an interpreter directive, which are also known as shebangs
+in Unix jargon. 
+
+I'm using the enviroment to load the Python interpreter because it allows me to run the script
+on different systems, where Python may be installed in a different location. Running the file
+now should work as expected.
+```bash
+$ ./fls.py "Hello, World"
+./fls.py
+"Hello, World"
+```
+
+Using the shebang also allows me to drop the `.py` file extension, which makes **fls** look
+even more like a terminal command.
+```bash
+$ ./fls "Hello, World"
+./fls
+"Hello, World"
+``` 
+
+The final step to making **fls** look real is to add it to my `PATH` so that it can be ran by
+simply typing `fls`. To avoid naming conflictions and other issues, and to group this command
+with other commands I plan to create in the future, I will create a seperate `bin` in my `HOME`
+directory. Not doing this could also cause me to break my installation of my operating system.
+Better safe than sorry.
+```bash
+$ mkdir -p ~/bin
+```
+
+I'll copy my script there.
+```bash
+cp fls ~/bin
+```
+
+Then add `~/bin` to my `PATH`. To make this command available across terminal sessions I 
+need to create to `export` the path each time the terminal fires, which I can do easily by
+adding it to my `.bash_profile`.
+```bash
+export PATH=$PATH":$HOME/bin"
+```
+After restarting the shell I can then run the command.
+```bash
+$ fls Hello, World
+Hello, 
+World
+```
+
+Magical.
 
