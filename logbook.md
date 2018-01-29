@@ -64,8 +64,8 @@ given me this habit.
 """
 fls.py
 
-Terminal command that expands on the functionality of the `ls` command by allowing tagged
-sorting of cateogries.
+Terminal command that expands on the functionality of the `ls` command by grouping files
+by their tags.
 """
 ```
 
@@ -218,6 +218,8 @@ Hello,
 World
 ```
 
+Here's what my script looks like up to this point.
+
 Magical.
 
 # Tag City
@@ -229,5 +231,13 @@ Now that I can run the command in any directory it is time for me to tackle the 
 
 First, I need to locate the tags. After some Googling I found that **tags** are located in a
 `.plist` file at `~/Library/SyncedPreferences/com.apple.finder.plist`. Opening this in Vim
-gave me a ton of gibberish.
+gave me a ton of gibberish. So I decided to use Python's in-built module to access `.plist`
+files. I also need to `import os` so that I can work with files.
+```python
+import os
+import sys
+import plistlib
+...
+```
+I know right? What **can't** Python do? I'm just as suprised as you are.
 
