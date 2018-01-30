@@ -238,7 +238,7 @@ workspace
 
 2. Running `fls` without a specefied `<file_name>` prints out all the files in the current 
 directory in alphabetical order.
-```
+```bash
 Rohan-MacBook-Pro:working rohan$ fls
 augment
 cs
@@ -250,7 +250,7 @@ makeschool
 
 3. Running `fls -t` prints out all the tags of files in the current directory in alphabetical
 order.
-```
+```bash
 Rohan-MacBook-Pro:working rohan$ fls
 makeschool
 personal
