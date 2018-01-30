@@ -221,22 +221,48 @@ World
 [Here's what my script looks like up to this point.](https://github.com/Meeshbhoombah/fls/blob/146409a305fb9c16a44d48625f6679b8a030dacb/fls.py)
 Magical.
 
-# Tag City
+## Tag City
 Now that I can run the command in any directory it is time for me to tackle the second step:
 1. `fls` in any dir prints "Hello World!"
 2. **`fls` prints the tags of current dir**
 3. `fls` categorizes files by tags and prints them
 4. `fls` looks aesthetic
 
-First, I need to locate the tags. After some Googling I found that **tags** are located in a
-`.plist` file at `~/Library/SyncedPreferences/com.apple.finder.plist`. Opening this in Vim
-gave me a ton of gibberish. So I decided to use Python's in-built module to access `.plist`
-files. I also need to `import os` so that I can work with files.
-```python
-import os
-import sys
-import plistlib
-...
+### ++
+Again, decided to chunk this step down to enable me to complete it incrementally.
+1. `fls <file_name>` should list all the tags of that file
+```bash
+$ fls go/
+workspace
 ```
-I know right? What **can't** Python do? I'm just as suprised as you are.
+
+2. Running `fls` without a specefied `<file_name>` prints out all the files in the current 
+directory in alphabetical order.
+```
+Rohan-MacBook-Pro:working rohan$ fls
+augment
+cs
+fls
+go
+lab
+makeschool
+```
+
+3. Running `fls -t` prints out all the tags of files in the current directory in alphabetical
+order.
+```
+Rohan-MacBook-Pro:working rohan$ fls
+makeschool
+personal
+workspace
+```
+
+### APFS !Built in One Day
+First, I need to locate the tags. After some Googling I found that we can use the in-built 
+macOS command, `mdls`, which stands for "metadata list." I felt like it would be wise to try
+it out in the shell before I started working with it in Python.
+
+In my root directory I have a subdirectory called `working` where I store all my code. Here's
+what it looks like in Finder.
+![][tags from_finder]
 
