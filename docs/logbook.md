@@ -257,7 +257,7 @@ personal
 workspace
 ```
 
-### APFS !Built in One Day
+### It's Hacky, I Know
 First, I need to locate the tags. After some Googling I found that we can use the in-built 
 macOS command, `mdls`, which stands for "metadata list." I felt like it would be wise to try
 it out in the shell before I started working with it in Python.
@@ -265,4 +265,35 @@ it out in the shell before I started working with it in Python.
 In my root directory I have a subdirectory called `working` where I store all my code. Here's
 what it looks like in Finder.
 ![][tags from_finder]
+
+Doing mdls <directory_name> in this directory returns a the values of that file's Core Service
+Constants, which are variable's used by macOS to access and manage key operating system
+services, such as launch or identity services.
+```bash
+Rohans-MacBook-Pro:working rohan$ mdls fls/
+_kMDItemOwnerUserID            = 501
+kMDItemContentCreationDate     = 2018-01-21 19:58:15 +0000
+kMDItemContentModificationDate = 2018-01-30 09:01:32 +0000
+...
+kMDItemKind                    = "Folder"
+kMDItemUserTags                = (
+    personal
+)
+```
+These constants provide details about certain file attributes. The `kMDItemContentCreationDate`
+is the `DateTime` value of when the file was created, and as you can see here, we 
+also have a list of the tags that the file has through the `kMDItemUserTags` constant.
+
+Using the `subprocess` module, which is a part of Python's standard library, I can execute
+terminal commands inside a script and read in their ouput as a series of lines. Through this,
+I can parse the `kMDItemUserTags` constant, and output its list of values to the terminal.
+```python
+...
+import os
+import sys
+import subprocess
+```
+The `os` module has a function to help me validate a file or foldername. This will give my 
+command line tool better usability. Before I do this I'll restructure the arguments input to
+provide better functionality for users as well as a help function.
 
