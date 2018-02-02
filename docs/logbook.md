@@ -331,11 +331,11 @@ def main(args):
 For now, I just want my command line tool to print some general help text, so I'll check if
 a tag is passed and print the help text if it is. I'll use "Help" as a placeholder for now.
 ```python
-    user_input = args[1]
+user_input = args[1]
 
-    # tag
-    if user_input[0] == "-":
-        print("Help")
+# tag
+if user_input[0] == "-":
+    print("Help")
 ```
 
 If that's not the case, I'll check if it's a file or directory using the `os` module which
