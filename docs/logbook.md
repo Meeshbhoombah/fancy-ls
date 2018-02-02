@@ -268,6 +268,7 @@ it out in the shell before I started working with it in Python.
 
 In my root directory I have a subdirectory called `working` where I store all my code. Here's
 what it looks like in Finder.
+
 ![finder preview](https://github.com/Meeshbhoombah/fls/blob/dev/docs/imgs/finder_preview.png)
 
 Doing mdls <directory_name> in this directory returns a the values of that file's Core Service
