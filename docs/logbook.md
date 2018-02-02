@@ -299,13 +299,11 @@ and output its list of values to the terminal.
 ...
 import os
 import sys
-import glob
 import subprocess
 ```
 The `os` module has a function to help me validate a file or foldername. This will give my 
 command line tool better usability. Before I do this I'll restructure the arguments input to
-provide better functionality for users as well as a help function. I'll use this alongside the
-module `glob`, which makes it convient to import directories as well as their file names.
+provide better functionality for users as well as a help function. 
 
 I've reset the file down to it's barebones file structure save:
 ```python
@@ -342,7 +340,7 @@ a tag is passed and print the help text if it is. I'll use "Help" as a placehold
 
 If that's not the case, I'll check if it's a file or directory using the `os` module which
 I had mentioned earlier.
-````
+```python
 ...
 print("Help")
 
