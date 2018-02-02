@@ -4,45 +4,41 @@
 """
 fls.py
 
-Terminal command that expands on the functionality of the `ls` command by grouping files
-by their tags.
+Terminal command that expands on the functionality of the `ls` command by grouping files by 
+their tags.
 
 Attributes:
-    TAGS_REF (string): the url of the `.plist` file containg the user's tags, and relevant
-        tag info.
+    args (list): a list of the arguments passed in by the user where each argument is a string
+        in the collection
 """
 
 import os
 import sys
-import plistlib
+import glob
+import subprocess
 
-TAGS_REF = "~/Library/SyncedPreferences/com.apple.finder.plist"
+def main(args):
+    """ Parse user input and execute command """
 
-def read_file(file_url):
-    """ Reads in a file as a file object
+    # get only the first argument, can be file/dir
+    # path or help tag
+    user_input = args[1]
 
-    Args: 
-        read_file (string): takes in a string and reads in a file at that url's path
-    Returns:
-        file (file_object): returns a file as a file object
-    """
-    with open("~/Library/SyncedPreferences/com.apple.finder.plist", "wr") as f:
-        return f
+    # tag
+    if user_input[0] == "-":
+        print("Help")
 
+    # file or directory
+    elif os.path.isdir(user_input) or os.path(user_input):
+        # readability
+        path = user_input
 
-def read_plist(file_object):
-    """ Returns the contents of a file
-   
-    Args:
-        file_object (file object): the file object to read contents from
-    Returns:
-        contents (list):
-    """
-    contents = file_object.read()
-    return contents
+        # call mdls on file path
+        file_metadata = subprocess.check_call(["mdls", path])
 
+    else:
+        print("Not a valid argument.")
 
 if __name__ == "__main__":
-    contents = read_plist(read_file(TAGS_REF))
-    print(contents)
+    main(sys.argv)    
 

@@ -290,8 +290,11 @@ is the `DateTime` value of when the file was created, and as you can see here, w
 also have a list of the tags that the file has through the `kMDItemUserTags` constant.
 
 Using the `subprocess` module, which is a part of Python's standard library, I can execute
-terminal commands inside a script and read in their ouput as a series of lines. Through this,
-I can parse the `kMDItemUserTags` constant, and output its list of values to the terminal.
+terminal commands inside a script and read in their ouput as a series of lines. The `subprocess`
+module allows me to run a new instance of the shell, it specfically contains the function
+`check_output` which allows me to pass in a command and an argument and then recieve the 
+result of the argument as a string. Through this, I can parse the `kMDItemUserTags` constant,
+and output its list of values to the terminal.
 ```python
 ...
 import os
@@ -304,5 +307,45 @@ command line tool better usability. Before I do this I'll restructure the argume
 provide better functionality for users as well as a help function. I'll use this alongside the
 module `glob`, which makes it convient to import directories as well as their file names.
 
+I've reset the file down to it's barebones file structure save:
+```python
+...
+import subprocess
+
+def main(args):
+    """ Parse user input and execute command """
 
 
+if __name__ == "__main__":
+    main(sys.argv)    
+```
+
+First I will parse the arguments passed in by the user to get the directory or file that we
+need to extract the text of, or to print information to the user if they require help.
+```python
+def main(args):
+    ...
+    # get only the first argument, can be file/dir
+    # path or help tag
+    user_input = args[1]
+```
+
+For now, I just want my command line tool to print some general help text, so I'll check if
+a tag is passed and print the help text if it is. I'll use "Help" as a placeholder for now.
+```python
+    user_input = args[1]
+
+    # tag
+    if user_input[0] == "-":
+        print("Help")
+```
+
+If that's not the case, I'll check if it's a file or directory using the `os` module which
+I had mentioned earlier.
+````
+...
+print("Help")
+
+    # file or directory
+    elif os.path.isdir(user_input) or os.path(user_input):
+```
