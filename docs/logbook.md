@@ -4,10 +4,10 @@ facto interface of choice. Give us access to your version of that familiar black
 with it's friendly flashing cursor and we'll find endless hours of joy and gigabytes of 
 information about you that you probably never wanted us to know.
 
-After generally being mistified by its exitance we come to love our shells. Do you have a favorite 
-terminal command? Perhaps reconsider your priorities if your answer to that question was yes, 
-but before you do that, let me recount my findings on my favorite terminal command, `ls`, and how
-I extended its functionality with my groundbreaking project:
+After generally being mistified by its exitance we come to love our shells. Do you have a 
+favorite terminal command? Perhaps reconsider your priorities if your answer to that question 
+was yes, but before you do that, let me recount my findings on my favorite terminal command, 
+`ls`, and how I extended its functionality with my groundbreaking project:
 
 **fls**
 
@@ -51,6 +51,10 @@ are the incremental steps I decided on:
 4. `fls` looks aesthetic
 
 ## Implementation
+Given that I was looking to get this done quickly, my goal with the first pass of the project
+was to build a workable version that accomplished the tasks in mind. I plan to optimize my
+project later after I build it the first time.
+
 After creating a new directory, `fls`, and initalizing Git, I added Vim extensions to my
 `.gitignore`. Afterwards I created a new file inside `fls` named `fls.py`. 
 
@@ -102,8 +106,8 @@ if __name__ == "__main__":
         print_input(arg)
 ```
 
-Executing the command in any terminal would require me to mark the Python script as an executable
-file in the system.
+Executing the command in any terminal would require me to mark the Python script as an 
+executable file in the system.
 ```bash
 $ chmod +x fls.py
 ```
@@ -264,7 +268,7 @@ it out in the shell before I started working with it in Python.
 
 In my root directory I have a subdirectory called `working` where I store all my code. Here's
 what it looks like in Finder.
-![][tags from_finder]
+![finder preview](https://github.com/Meeshbhoombah/fls/blob/dev/docs/imgs/finder_preview.png)
 
 Doing mdls <directory_name> in this directory returns a the values of that file's Core Service
 Constants, which are variable's used by macOS to access and manage key operating system
@@ -291,9 +295,13 @@ I can parse the `kMDItemUserTags` constant, and output its list of values to the
 ...
 import os
 import sys
+import glob
 import subprocess
 ```
 The `os` module has a function to help me validate a file or foldername. This will give my 
 command line tool better usability. Before I do this I'll restructure the arguments input to
-provide better functionality for users as well as a help function.
+provide better functionality for users as well as a help function. I'll use this alongside the
+module `glob`, which makes it convient to import directories as well as their file names.
+
+
 
