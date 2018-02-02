@@ -347,3 +347,77 @@ print("Help")
     # file or directory
     elif os.path.isdir(user_input) or os.path(user_input):
 ```
+
+In the case that it is not, I want to inform the user that the argument passed was not a valid
+file or directory.
+```python
+...
+else:
+    print("Not a valid argument, file or directory required.")
+```
+
+Now I'll go back to my `elif` statement and call `mdls` on my path using the `subprocess`
+using the function from the `subprocess` module. I'll store the output of the call.
+```python
+...
+elif os.path.isdir(user_input) or os.path(user_input):
+    # readability
+    path = user_input
+
+    # call mdls on file path
+    file_metadata = subprocess.check_output(["mdls", path])
+```
+
+I know, from calling `mdls` on files and directories in my shell, that the constant I am
+looking for, `kMDItemUserTags`, generally appears at the end of the list of constants. To 
+speed up the process of splitting the outputs, which were returned to me as a string, I'll
+call `rfind` as opposed to the normal `find` method.
+```python
+...
+# find all tags from metadata
+    try:
+        tags_index = file_metadata.rfind("kMDItemUserTags")
+    except ValueError:
+        print(ValueError)
+```
+
+The methods `find` and `rfind` return the index at where the pattern matches, so I'll use
+that to split the metadata output.
+```python
+    ...
+    print(ValueError)
+
+# get only tags
+tags = file_metadata[tags_index:]
+```
+
+After that I'll split the string further so I can iterate over each tag and print it out
+to the user.
+```python
+...
+tags = file_metadata[tags_index:]
+
+# parse tags metadata
+tags = tags.split()
+
+# remove ending delimiter
+tags.pop()
+
+# get only tags and ending delimiter
+tags = tags[3:]
+
+# print all the tags
+for tag in tags:
+    print(tag)
+```
+
+After I copy the contents of the script to the executable I created located at `~/bin/`, I 
+can run `fls` and print the tags of any file.
+```bash
+$ cp fls.py ~/bin/fls
+$ fls ../fls/
+personal
+```
+
+It works!
+

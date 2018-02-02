@@ -58,7 +58,7 @@ def main(args):
             print(tag)
         
     else:
-        print("Not a valid argument.")
+        print("Not a valid argument, file or directory required.")
 
 if __name__ == "__main__":
     main(sys.argv)    
