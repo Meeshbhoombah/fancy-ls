@@ -16,7 +16,6 @@ import os
 import sys
 import subprocess
 
-
 def main(args):
 
     # get only the first argument, can be file/dir
@@ -37,7 +36,7 @@ def main(args):
 
         # find all tags from metadata
         try:
-            tags_index = file_metadata.rfind("kMDItemUserTags")
+            tags_index = file_metadata.find("kMDItemUserTags")
         except ValueError:
             print(ValueError)
 
@@ -63,17 +62,3 @@ def main(args):
 if __name__ == "__main__":
     main(sys.argv)    
 
-"""
-import pprint
-import plistlib
-
-TAG_REF = "/Users/rohan/Library/SyncedPreferences/com.apple.finder.plist"
-test_0 = plistlib.readPlist(TAG_REF)
-
-pprint.pprint(test_0)
-
-with open(TAG_REF, "r") as f:
-    file_contents = f.read()
-
-    print(plistlib.readPlistFromString(file_contents))
-"""

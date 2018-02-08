@@ -56,7 +56,20 @@ was to build a workable version that accomplished the tasks in mind. I plan to o
 project later after I build it the first time.
 
 After creating a new directory, `fls`, and initalizing Git, I added Vim extensions to my
-`.gitignore`. Afterwards I created a new file inside `fls` named `fls.py`. 
+`.gitignore`. I then created a virtual environment to work in using `virtualenv`.
+```bash
+$ virtualenv venv
+New python executable in /Users/rohan/Desktop/venv/bin/python
+Installing setuptools, pip, wheel...done.
+```
+Which I can then activate
+```bash
+$ source venv/bin/activate
+New python executable in /Users/rohan/Desktop/venv/bin/python
+Installing setuptools, pip, wheel...done.
+(venv) $ |
+```
+Afterwards I created a new file inside `fls` named `fls.py`. 
 
 I like to follow Google's [Doctring example](http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html) 
 and [Python Style Guide](https://google.github.io/styleguide/pyguide.html). As such, the first
@@ -192,7 +205,7 @@ even more like a terminal command.
 $ ./fls "Hello, World"
 ./fls
 "Hello, World"
-``` 
+```
 
 The final step to making **fls** look real is to add it to my `PATH` so that it can be ran by
 simply typing `fls`. To avoid naming conflictions and other issues, and to group this command
@@ -232,8 +245,7 @@ Now that I can run the command in any directory it is time for me to tackle the 
 3. `fls` categorizes files by tags and prints them
 4. `fls` looks aesthetic
 
-### ++
-Again, decided to chunk this step down to enable me to complete it incrementally.
+### Breakdown
 1. `fls <file_name>` should list all the tags of that file
 ```bash
 $ fls go/
@@ -261,12 +273,14 @@ personal
 workspace
 ```
 
-### It's Hacky, I Know
-First, I need to locate the tags. After some Googling I found that we can use the in-built 
-macOS command, `mdls`, which stands for "metadata list." I felt like it would be wise to try
-it out in the shell before I started working with it in Python.
+### Hacker, not Pefectionist 💀
+First, I need to locate the tags. After some Googling I found a built in mac command,
+`mdls`, which stands for "metadata list." This lists, as one might guess, the metadata 
+attributes of a given file. I feel like it would be wise to try it out in the shell before 
+I started working with it in Python.
 
-In my root directory I have a subdirectory called `working` where I store all my code. Here's
+In my root directory I have a subdirectory called `working` where I store all my code. I have
+this divided into three seperate branches Here's
 what it looks like in Finder.
 
 ![finder preview](https://github.com/Meeshbhoombah/fls/blob/dev/docs/imgs/finder_preview.png)
@@ -341,11 +355,11 @@ if user_input[0] == "-":
 If that's not the case, I'll check if it's a file or directory using the `os` module which
 I had mentioned earlier.
 ```python
-...
-print("Help")
+    ...
+    print("Help")
 
-    # file or directory
-    elif os.path.isdir(user_input) or os.path(user_input):
+# file or directory
+elif os.path.isdir(user_input) or os.path(user_input):
 ```
 
 In the case that it is not, I want to inform the user that the argument passed was not a valid
@@ -371,7 +385,8 @@ elif os.path.isdir(user_input) or os.path(user_input):
 I know, from calling `mdls` on files and directories in my shell, that the constant I am
 looking for, `kMDItemUserTags`, generally appears at the end of the list of constants. To 
 speed up the process of splitting the outputs, which were returned to me as a string, I'll
-call `rfind` as opposed to the normal `find` method.
+call `rfind` as opposed to the normal `find` method. This starts searching for a given pattern
+from the rightmost character of the string.
 ```python
 ...
 # find all tags from metadata
@@ -380,8 +395,10 @@ call `rfind` as opposed to the normal `find` method.
     except ValueError:
         print(ValueError)
 ```
+Good error handling saves lives. I would like to also point out that good is subjective, as
+I know some may have complaints about the way I handled this error.
 
-The methods `find` and `rfind` return the index at where the pattern matches, so I'll use
+The methods `find` and `rfind` return the index at where the pattern matches, so I used
 that to split the metadata output.
 ```python
     ...
@@ -391,7 +408,7 @@ that to split the metadata output.
 tags = file_metadata[tags_index:]
 ```
 
-After that I'll split the string further so I can iterate over each tag and print it out
+After that I split the string further which enabled me iterate over each tag and print it out 
 to the user.
 ```python
 ...
@@ -418,6 +435,26 @@ $ cp fls.py ~/bin/fls
 $ fls ../fls/
 personal
 ```
+Great! The script prints the tags of a given file or directory.
 
-It works!
+#### Virtual Environment Bug
+I decided to take a break after implementing this and deactivated the virtual environment in
+which I had been writing my code. After running my command without a virutal environment
+I got an error that would not occur in an active virtual environment.
+```bash
+$ python fls.py ../fls/
+Traceback (most recent call last):
+  File "fls.py", line 63, in <module>
+    main(sys.argv)    
+  File "fls.py", line 39, in main
+    tags_index = file_metadata.rfind("kMDItemUserTags")
+TypeError: a bytes-like object is required, not 'str'
+```
+From the error, I guessed that the method `check_output` in the `subprocess` module, which I
+used to call the `mdls` function may not have been doing what I thought it did. I decided to
+check Python's standard documentation again to affirm this.
+
+![check output](img/check_output_screenshot)
+
+
 
