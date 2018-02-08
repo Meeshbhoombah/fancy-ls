@@ -456,8 +456,8 @@ check Python's standard documentation again to affirm this.
 
 ![check output](https://github.com/Meeshbhoombah/fls/blob/dev/docs/imgs/check_output_screenshot.png)
 
-Oops. Luckily this is a quick fix, I can convert the bytes string to a string after the 
-`check_output` call.
+Oops. Luckily this is a quick fix, I can convert the bytes-like object (a bytes string) 
+to a string after the `check_output` call.
 ```python
 ...
 file_metadata = subprocess.check_output(["mdls", path])
@@ -472,4 +472,35 @@ $ python fls.py ../fls/
 personal
 ```
 How the fuck was it working before?
+
+#### Regularly Scheduled Programming
+I need to print all files in the current directory if no `<file_name>` is passed as an
+argument. The simplest way to do this is to use the `glob` module to return an iterator of
+all the files and directories in a given directory.
+```python
+def main(args):
+
+    # check if args are passed
+    try:
+        args[1]
+    except IndexError:
+        # if no args are passed print every file in 
+        # cwd (current working directory)
+        cwd = os.getcwd()
+        
+        for file_name in glob.iglob(cwd + "/*"):
+            print(file_name)
+        
+        return
+
+    # get only the first argument, can be file/dir
+    # path or help tag
+    user_input = args[1]
+    ...
+```
+This grabs all the files in the current working directory but also grabs the entire filepath
+to for each file. I want to just print the file name.
+```python
+
+```
 

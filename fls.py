@@ -15,15 +15,33 @@ Attributes:
 import os
 import sys
 import subprocess
+import glob
 
 def main(args):
+
+    # check if args are passed
+    try:
+        args[1]
+    except IndexError:
+        # if no args are passed print every file in 
+        # cwd (current working directory)
+        cwd = os.getcwd()
+        
+        for file_name in glob.iglob(cwd + "/*"):
+
+            # remove cwd path
+            file_name = file_name[len(cwd) + 1:]
+
+            print(file_name)
+        
+        return
 
     # get only the first argument, can be file/dir
     # path or help tag
     user_input = args[1]
-
-    # tag
-    if user_input[0] == "-":
+        
+    # check string for tag delimiter
+    if user_input == "-":
         print("Help")
 
     # file or directory
@@ -61,6 +79,7 @@ def main(args):
         
     else:
         print("Not a valid argument, file or directory required.")
+
 
 if __name__ == "__main__":
     main(sys.argv)    
