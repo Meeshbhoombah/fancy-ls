@@ -16,8 +16,8 @@ import os
 import sys
 import subprocess
 
+
 def main(args):
-    """ Parse user input and execute command """
 
     # get only the first argument, can be file/dir
     # path or help tag
@@ -63,3 +63,17 @@ def main(args):
 if __name__ == "__main__":
     main(sys.argv)    
 
+"""
+import pprint
+import plistlib
+
+TAG_REF = "/Users/rohan/Library/SyncedPreferences/com.apple.finder.plist"
+test_0 = plistlib.readPlist(TAG_REF)
+
+pprint.pprint(test_0)
+
+with open(TAG_REF, "r") as f:
+    file_contents = f.read()
+
+    print(plistlib.readPlistFromString(file_contents))
+"""
