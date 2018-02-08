@@ -34,6 +34,9 @@ def main(args):
         # call mdls on file path
         file_metadata = subprocess.check_output(["mdls", path])
 
+        # convert bytes string to string
+        file_metadata = str(file_metadata, "utf-8")
+
         # find all tags from metadata
         try:
             tags_index = file_metadata.find("kMDItemUserTags")

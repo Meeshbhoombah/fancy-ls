@@ -454,7 +454,21 @@ From the error, I guessed that the method `check_output` in the `subprocess` mod
 used to call the `mdls` function may not have been doing what I thought it did. I decided to
 check Python's standard documentation again to affirm this.
 
-![check output](img/check_output_screenshot)
+![check output](https://github.com/Meeshbhoombah/fls/blob/dev/docs/imgs/check_output_screenshot.png)
 
+Oops. Luckily this is a quick fix, I can convert the bytes string to a string after the 
+`check_output` call.
+```python
+...
+file_metadata = subprocess.check_output(["mdls", path])
 
+# convert bytes string to string
+file_metadata = str(file_metadata, "utf-8")
+```
+Running the command in the terminal now prints the expected output. When I copied the contents
+of the file over to my `bin` the script worked as expected.
+```bash
+$ python fls.py ../fls/
+personal
+```
 
