@@ -17,6 +17,9 @@ import sys
 import subprocess
 import glob
 
+# Contents of directory, if given
+DIR_FILES = []
+
 def main(args):
 
     # check if args are passed
@@ -29,11 +32,17 @@ def main(args):
         
         for file_name in glob.iglob(cwd + "/*"):
 
-            # remove cwd path
-            file_name = file_name[len(cwd) + 1:]
+            # remove cwd path and attach to list
+            DIR_FILES.append(file_name[len(cwd) + 1:])
 
+        # sort alphabtically
+        sorted(DIR_FILES)
+
+        # print in alphabetical order
+        for file_name in DIR_FILES:
             print(file_name)
-        
+       
+        # end command
         return
 
     # get only the first argument, can be file/dir

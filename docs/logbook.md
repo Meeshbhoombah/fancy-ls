@@ -501,6 +501,42 @@ def main(args):
 This grabs all the files in the current working directory but also grabs the entire filepath
 to for each file. I want to just print the file name.
 ```python
+...
+for file_name in glob.iglob(cwd + "/*"):
 
+    # remove cwd path
+    file_name = file_name[len(cwd) + 1:]
+```
+Noice. The last step is to make it alphabetical order. I decided to add an attribute that 
+contained the files of the given directory as it seems like something I may need to reference 
+later (hint: definetly need to reference later).
+```python
+# Contents of directory, if given
+DIR_FILES = []
+
+def main(args):
+
+    # check if args are passed
+    try:
+        args[1]
+    except IndexError:
+        # if no args are passed print every file in 
+        # cwd (current working directory)
+        cwd = os.getcwd()
+        
+        for file_name in glob.iglob(cwd + "/*"):
+
+            # remove cwd path and attach to list
+            DIR_FILES.append(file_name[len(cwd) + 1:])
+
+        # sort alphabtically
+        sorted(DIR_FILES)
+
+        # print in alphabetical order
+        for file_name in DIR_FILES:
+            print(file_name)
+       
+        # end command
+        return
 ```
 
