@@ -1,18 +1,13 @@
-#!/usr/bin/env python
+#!/bin/usr/python3
 
-"""
-fls.py
+"""Extends the funtionality of the `ls` to Finder tags
 
-Terminal command that expands on the functionality of the `ls` command by grouping files by 
-their tags.
-
-Attributes:
-    args (list): a list of the arguments passed in by the user where each argument is a string
-        in the collection
+Can read and output the colored tags of all files in the current directory or
+of a given directory or file.
 """
 
-def main(args):
+class Tags:
 
-if __name__ == "__main__":
-    main() 
+    def __init__(self, file_path):
+        self.tags = self.read(file_path)
 
